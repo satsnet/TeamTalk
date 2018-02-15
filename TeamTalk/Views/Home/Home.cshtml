@@ -1,0 +1,205 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mainchat">
+        <div class="col-xs-4 leftpanel">
+            <div class="row">
+                <ul class="list-unstyled">
+                    
+                        @Html.Action("_OnlineUser", "Home")
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-8 rightpanel" id="UsersChatWindow">
+           
+        </div>
+    </div>
+
+    
+
+    <br />
+
+    <input type="hidden" value="@User.Identity.Name" id="hiddenuname" />
+
+    
+
+
+     
+
+    @*<div id="chats">
+
+    </div>
+    <hr />
+
+    All chats ----
+    <div id="sas">
+        <input type="text" id="messageAll" name="message" />
+        <input type="button" id="allChatSend" name="allChatSend" value="Send to All" />
+    </div>
+
+    <div id="all_chats">
+
+    </div>*@
+
+
+    
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        function CloseWindow(q) {
+            var divtoClose = q.id.replace("cls_", "chatBox_");
+            $("#" + divtoClose).remove();
+        }
+
+
+        $(document).ready(function () {
+            function LoadMessages(fromUser, toUser, startDate) {
+                $("#chats_" + toUser).html('');
+                var Message = { FromUser: fromUser, ToUser: toUser, CreateDate: startDate };
+                $.get("LoadMessages", Message).success(function (data) {
+
+                    data = JSON.parse(data);
+
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ToUser == $('#hiddenuname').val()) {
+                            $("#chats_" + data[i].FromUser).append('<li class="left">' + data[i].MessageText + '</li>');
+                        }
+                        else {
+                            $("#chats_" + data[i].ToUser).append('<li class="right">' + data[i].MessageText + '</li>');
+                        }
+
+                    }
+
+                });
+            }
+
+            function AppendUsers(userToChat) {
+                if ($("#chatBox_" + userToChat).length == 0) {
+                    $("#UsersChatWindow").html('');
+                    var chatBox = "<div class='row' id='chatBox_" + userToChat + "'> <div class='col-xs-12'>                    <div class='row'>          <table class='table'>                            <tr>                                <td width='40' align='center'>                                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 299.997 299.997' width='30' height='30'><path d='M149.996 0C67.157 0 .001 67.158.001 149.997c0 82.837 67.156 150 149.995 150s150-67.163 150-150C299.996 67.156 232.835 0 149.996 0zm.457 220.763v-.002H85.465c0-46.856 41.152-46.845 50.284-59.097l1.045-5.587c-12.83-6.502-21.887-22.178-21.887-40.512 0-24.154 15.712-43.738 35.089-43.738s35.089 19.584 35.089 43.738c0 18.178-8.896 33.756-21.555 40.361l1.19 6.349c10.019 11.658 49.802 12.418 49.802 58.488h-64.069z' fill='#009987' /></svg>                                </td>                                <td>" + userToChat + "                                </td>                            </tr>                        </table>                    </div>                </div>                <div class='col-xs-12'>   <div class='row'>                  <div class='chatpanel' ><ul class='list-unstyled' id='chats_" + userToChat + "'></ul></div></div>           </div>                <div class='col-xs-12 bottompanel'>                       <input type='hidden' value='" + userToChat + "' id='hiddenusername_" + userToChat + "' /><input type='text' class='txtsend col-xs-8 message' id='message_" + userToChat + "' placeholder='Enter Message' />                    <input type='button' class='col-xs-4 btnsend send' id='send_" + userToChat + "' value='Send Message' />                </div>            </div>"
+                   //     <div id='chatBox_" + userToChat + "'><label>" + userToChat + " </label><div id='chats_" + userToChat + "'></div> <hr><input class='message' type='text' id='message_" + userToChat + "' name='message' /><label id='isTyping_" + userToChat + "' style='display:none' ></label>"
+                   //+ " <input type='submit' class='send' id='send_" + userToChat + "' name='send' value='Send'/>"
+
+                   //+ "<input type='hidden' value='" + userToChat + "' id='hiddenusername_" + userToChat + "' /><input type='button' value='X' class='close' id='cls_" + userToChat + "' onclick='return CloseWindow(this);'/></div>";
+                    $("#UsersChatWindow").append(chatBox);
+                    updateScroll(userToChat);
+                }
+            }
+
+            $(".users").click(function (e) {
+                $("#msgCount_" + $(this).attr("username")).html('');
+                $("#msgCount_" + $(this).attr("username")).css("display", "none");
+                LoadMessages($('#hiddenuname').val(), $(this).attr("username"), new Date());
+                
+                var userToChat = $(this).attr("username");
+              
+                AppendUsers(userToChat);
+               
+            });
+
+
+            function updateScroll(receiver) {
+                debugger;
+                var element = document.getElementById("chats_" + receiver);
+                element.scrollTop = element.scrollHeight;
+            }
+
+            $("#allChatSend").click(function () {
+                var msg = $('#messageAll').val();
+                $('#messageAll').val('');
+                teamTalk.server.sendMessageAll($('#hiddenuname').val(), msg);
+
+            });
+
+            var teamTalk = $.connection.talkHub;
+
+            teamTalk.client.send = function (username, message, receiver) {
+
+                if (username.toLowerCase() == $("#hiddenuname").val().toLowerCase()) {
+                    $("#msgCount_" + receiver).css("display", "block");
+                    var msgCount = $("#msgCount_" + receiver).html();
+                    if (msgCount == "")
+                    {
+                        msgCount = 0;
+                    }
+                    $("#msgCount_" + receiver).html(parseInt(msgCount) + 1);
+                   // AppendUsers(receiver);
+                    $("#chats_" + receiver).append('<li class="left">' + message + '</li>');
+                    updateScroll(receiver);
+                }
+            }
+
+
+
+            teamTalk.client.receiveAll = function (username, message) {
+                $("#all_chats").append('<li class="right">' + message + '</li>');
+            }
+
+            teamTalk.client.typing = function (username, is, receiver) {
+
+                if (username.toLowerCase() == $("#hiddenuname").val().toLowerCase()) {
+                    if (is) {
+                        
+                        $("#isTyping_" + receiver).html("typing....");
+                        $("#isTyping_" + receiver).show();
+                        setTimeout(function () { $("#isTyping_" + receiver).hide(); }, 1000);
+
+                    }
+                    else {
+                        $("#isTyping_" + receiver).hide();
+                    }
+
+                }
+            }
+
+
+            $("#UsersChatWindow").on('keyup', '.message', function () {
+                
+                var t = this.id;
+                //  console.log(t);
+                var receiver = t.replace("message_", "");
+                teamTalk.server.isTyping(receiver, true, $("#hiddenuname").val());
+            });
+
+
+
+            $.connection.hub.start();
+
+            $("#UsersChatWindow").on('click', '.send', function () {
+                
+                var t = this.id;
+                //  console.log(t);
+                var msgText = t.replace("send_", "message_");
+                var username = t.replace("send_", "hiddenusername_");
+                var chatboxarea = t.replace("send_", "chats_");
+                //  alert("wdwdwwd");
+                var msg = $("#" + msgText).val();
+                $("#" + chatboxarea).append('<li class="right">' + msg + '</li>');
+                $("#" + msgText).val('');
+                teamTalk.server.sendMessage($('#' + username).val(), msg, $("#hiddenuname").val());
+               
+                updateScroll($('#' + username).val());
+            });
+        });
+
+    </script>
+</body>
+</html>

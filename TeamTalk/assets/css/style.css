@@ -1,0 +1,253 @@
+﻿body {
+    font-family: 'Montserrat', sans-serif;
+    border:1px solid #eee;
+}
+
+.mainchat {    
+    width: 700px;
+    height: 600px;
+    margin: 20px auto;
+    box-shadow: 0 0 15px #0000005e;
+}
+
+tr{
+        border-top: 1px solid #eee !important;
+}
+
+.offlinetable tr{
+      background-color: #fff;
+    opacity: 0.5;
+}
+
+a{
+    color:#000;
+    text-transform:uppercase;
+}
+
+a:hover, a:focus, a:visited{
+    color:#000;
+    text-decoration:none;
+    
+}
+
+h1{
+        font-size: 19px;
+    margin: 0;
+    padding: 14px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    height: 48px;
+    color: #009987;
+    font-weight: bold;
+}
+
+h1 span{
+        background: #009987;
+    border-radius: 50%;
+    padding: 5px 10px;
+    color: #fff;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 20px;
+    margin: 0 5px 0 0px;    vertical-align: bottom;
+}
+
+table {
+    border-bottom: 1px solid #eee;
+    margin: 0 !important;
+}
+
+.mainchat ul li {
+    text-align: left;
+}
+
+.mainchat td {
+    font-size: 11px;
+    font-weight: 500; 
+    position:relative;
+    vertical-align:middle !important;
+    border:0 !important;
+    text-transform:uppercase;
+}
+
+.mainchat svg {
+    display: block;
+}
+
+.mainchat h3 {
+    font-size: 12px;
+    margin: 0;
+    padding: 15px 6px;
+    text-align: center;
+    color: #b5b5b5;
+    font-weight: 600;
+}
+
+.leftpanel{
+    overflow: auto;
+    height:600px;
+}
+
+.middlepanel{
+        overflow: auto;
+    height: 511px;
+}
+
+.rightpanel{
+    border-left:1px solid #eee;position:relative;height:600px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.bottompanel{
+    position:absolute;
+    bottom:0;    padding: 10px;  border-top: 1px solid #eee;
+}
+
+.chatpanel{
+      height: 491px;
+    background: #f8f8f8;
+    overflow: hidden;
+
+}
+
+.txtsend{
+        border: 1px solid #eee;
+    box-shadow: none;
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 400;
+    border-radius: 16px;
+    height: 41px;
+}
+
+.btnsend{
+        border: 0;
+    background: #009987;
+    height: 41px;
+    border-radius: 35px;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    width: 139px;
+    margin: 0 0px 0 9px;
+}
+
+li.right{
+        text-align: right !important;
+    padding: 10px 15px;
+    display: block;
+    background: #ececec;
+    border-radius: 9px 9px 9px 4px;
+    color: #484848;
+    width: 79%;
+    margin: 0 0 8px auto;
+    font-size: 11px;
+    position: relative;
+    letter-spacing: 0.5px;     word-break: break-word;
+}
+
+li.left{
+    text-align: left !important;
+    padding: 10px 15px;
+    display: block;
+    background: #fff;
+    border-radius: 9px 9px 9px 4px;
+    color: #484848;        word-break: break-word;
+    width: 79%;
+    margin: 0 auto 8px 0;
+    font-size: 11px;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+li.right:before {
+    content: "";
+    position: absolute;   
+    top: 31px;
+    width: 0;
+    right: 99%;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 15px solid #ececec;
+    border-bottom: 0px solid transparent;
+    transform: rotate(-10deg);
+}
+
+li.left:before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0;
+    left: 99%;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-right: 15px solid #fff;
+    border-bottom: 0px solid transparent;
+    transform: rotate(215deg);
+}
+
+.chatpanel ul{
+        overflow: auto;
+    height: 490px;    padding: 7px;
+}
+
+label#msgCount_satsvelke {
+background: #4a4a4a;
+    color: #fff;
+    padding: 9px;
+    border-radius: 50%;
+    line-height: 8px;
+    font-size: 9px;
+    text-align: center;
+    height: 25px;
+    font-weight: 500;
+    margin: 2px 0;
+    position: absolute;
+    right: 15px;
+    top: 8px;
+}
+#isTyping_satsvelke{
+    position: absolute;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    top: 28px;
+    color: #b7b7b7;
+    margin: 0;
+    left: 8px;
+    }
+
+.logoutbtn {
+        position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.logoutbtn a{
+        display: block;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 12px;
+    letter-spacing: 0.5px;
+}

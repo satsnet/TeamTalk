@@ -44,7 +44,6 @@ namespace TeamTalk.Controllers
         [AllowAnonymous]
         public ActionResult DoLogin(User user)
         {
-
             //    bool isValid = false;
             BUser bu = new BUser();
             if (bu.Login(user.Username, user.Password))

@@ -15,7 +15,6 @@ namespace TeamTalk.Controllers
         // GET: Home
         public ActionResult Home()
         {
-
             return View();
         }
         [HttpGet]
@@ -29,15 +28,11 @@ namespace TeamTalk.Controllers
         public ActionResult _OnlineUser()
         {
             BUser bu = new BUser();
-
-
             var OnlineUsers = bu.GetOnlineUsers();
             var OfflineUsers = bu.GetOfflineUsers();
-
             dynamic TeamTalkers = new ExpandoObject();
             TeamTalkers.OnlineUser = OnlineUsers;
             TeamTalkers.OfflineUser = OfflineUsers;
-
             return View("_UserList", TeamTalkers);
         }
 

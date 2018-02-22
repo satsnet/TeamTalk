@@ -21,10 +21,9 @@ namespace TeamTalk.Controllers
         [HttpGet]
         public JsonResult LoadMessages(Messages msg)
         {
-
             BMessages bm = new BMessages();
-          var msgs=  bm.LoadMessages(msg.FromUser,msg.ToUser,msg.CreateDate);
-            return Json(JsonConvert.SerializeObject(msgs),JsonRequestBehavior.AllowGet);
+            var msgs = bm.LoadMessages(msg.FromUser, msg.ToUser, msg.CreateDate);
+            return Json(JsonConvert.SerializeObject(msgs), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _OnlineUser()
